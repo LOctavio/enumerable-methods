@@ -44,6 +44,16 @@ module Enumerable
     end
     condition
   end
+
+  def my_none?
+    i = 0
+    condition = true
+    while i < length
+      condition = false if yield self[i]
+      i += 1
+    end
+    condition
+  end
 end
 
 puts 'my_each method:'
@@ -68,4 +78,9 @@ puts
 puts 'my_any? method:'
 puts([8, 4, 3, 9, 5].my_any? { |x| x >= 3 })
 puts([8, 4, 3, 9, 5].my_any? { |x| x >= 10 })
+puts
+
+puts 'my_none? method:'
+puts([8, 4, 3, 9, 5].my_none? { |x| x >= 3 })
+puts([8, 4, 3, 9, 5].my_none? { |x| x >= 10 })
 puts
