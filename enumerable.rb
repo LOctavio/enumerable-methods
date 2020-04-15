@@ -24,6 +24,16 @@ module Enumerable
     end
     arr
   end
+
+  def my_all?
+    i = 0
+    condition = true
+    while i < length
+      condition = false unless yield self[i]
+      i += 1
+    end
+    condition
+  end
 end
 
 puts 'my_each method:'
@@ -36,3 +46,7 @@ puts hash
 puts
 puts 'my_select_method:'
 puts([1, 2, 3, 4, 5, 6, 7, 8, 9].my_select { |x| (x % 3).zero? })
+puts
+puts 'my_all? method'
+puts([8, 4, 3, 9, 5].my_all? { |x| x >= 3 })
+puts([8, 4, 3, 9, 5].my_all? { |x| x >= 4 })
