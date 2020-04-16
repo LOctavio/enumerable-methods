@@ -1,40 +1,31 @@
 module Enumerable
   def my_each
-    if block_given?
-      i = 0
-      while i < length
-        yield self[i]
-        i += 1
-      end
-    else
-      to_enum
+    return to_enum unless block_given?
+    i = 0
+    while i < length
+      yield self[i]
+      i += 1
     end
   end
 
   def my_each_with_index
-    if block_given?
-      i = 0
-      while i < length
-        yield self[i], i
-        i += 1
-      end
-    else
-      self
+    return self unless block_given?  
+    i = 0
+    while i < length
+      yield self[i], i
+      i += 1
     end
   end
 
   def my_select
-    if block_given?
-      i = 0
-      arr = []
-      while i < length
-        arr << self[i] if yield self[i]
-        i += 1
-      end
-      arr
-    else
-      to_enum
+    return to_enum unless block_given?
+    i = 0
+    arr = []
+    while i < length
+      arr << self[i] if yield self[i]
+      i += 1
     end
+    arr
   end
 
   def my_all?
