@@ -19,12 +19,8 @@ module Enumerable
 
   def my_select
     return to_enum unless block_given?
-    i = 0
     arr = []
-    while i < length
-      arr << self[i] if yield self[i]
-      i += 1
-    end
+    self.my_each { |x| arr << x if yield x }
     arr
   end
 
