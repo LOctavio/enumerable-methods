@@ -1,6 +1,7 @@
 module Enumerable
   def my_each
     return to_enum unless block_given?
+
     i = 0
     while i < length
       yield self[i]
@@ -9,7 +10,8 @@ module Enumerable
   end
 
   def my_each_with_index
-    return self unless block_given?  
+    return self unless block_given?
+
     i = 0
     while i < length
       yield self[i], i
@@ -19,17 +21,24 @@ module Enumerable
 
   def my_select
     return to_enum unless block_given?
+
     arr = []
-    self.my_each { |x| arr << x if yield x }
+    my_each { |x| arr << x if yield x }
     arr
   end
 
-  def my_all?
-    i = 0
+  def my_all?(pattern = nil)
     condition = true
-    while i < length
-      condition = false unless yield self[i]
-      i += 1
+    my_each do |x|
+      if pattern.nil?
+        if block_given?
+          condition = false unless yield x
+        else
+          condition = my_all? { |x| !x.nil? && (x != false)}
+        end
+      else
+        condition = false unless pattern === x
+      end
     end
     condition
   end
@@ -77,6 +86,9 @@ puts
 puts 'my_all? method:'
 puts([8, 4, 3, 9, 5].my_all? { |x| x >= 3 })
 puts([8, 4, 3, 9, 5].my_all? { |x| x >= 4 })
+puts [8, 4, 3, false, 9].my_all?
+puts [8, 4, 3, 9, true].my_all?(Numeric)
+puts ['casd', 'ljdilj'].my_all?(/d/)
 puts
 
 puts 'my_any? method:'
