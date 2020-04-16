@@ -59,12 +59,18 @@ module Enumerable
     condition
   end
 
-  def my_none?
-    i = 0
+  def my_none?(pattern = nil)
     condition = true
-    while i < length
-      condition = false if yield self[i]
-      i += 1
+    my_each do |x|
+      if pattern.nil?
+        if block_given?
+          condition = false if yield x
+        else
+          condition = my_any? { |x| x == true}
+        end
+      else
+        condition = false if pattern === x
+      end
     end
     condition
   end
