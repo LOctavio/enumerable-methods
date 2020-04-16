@@ -43,12 +43,18 @@ module Enumerable
     condition
   end
 
-  def my_any?
-    i = 0
+  def my_any?(pattern = nil)
     condition = false
-    while i < length
-      condition = true if yield self[i]
-      i += 1
+    my_each do |x|
+      if pattern.nil?
+        if block_given?
+          condition = true if yield x
+        else
+          condition = my_any? { |x| !x.nil? && (x != false)}
+        end
+      else
+        condition = true if pattern === x
+      end
     end
     condition
   end
@@ -94,6 +100,9 @@ puts
 puts 'my_any? method:'
 puts([8, 4, 3, 9, 5].my_any? { |x| x >= 3 })
 puts([8, 4, 3, 9, 5].my_any? { |x| x >= 10 })
+puts [8, 4, 3, false, 9].my_any?
+puts [8, 4, 3, 9, true].my_any?(Numeric)
+puts ['cas', 'ljilj'].my_any?(/d/)
 puts
 
 puts 'my_none? method:'
