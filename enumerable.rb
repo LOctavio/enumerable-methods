@@ -60,7 +60,7 @@ module Enumerable
   def my_count(item = nil)
     count = 0
     if item.nil?
-      block_given? ? my_each { |x| count += 1 if yield x } : count += 1
+      block_given? ? my_each { |x| count += 1 if yield x } : my_each { count += 1 }
     else
       my_each { |x| count += 1 if item == x }
     end
