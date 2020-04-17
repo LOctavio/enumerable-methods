@@ -66,6 +66,14 @@ module Enumerable
     end
     count
   end
+
+  def my_map
+    return to_enum unless block_given?
+
+    arr = []
+    my_each { |x| arr << yield(x) }
+    arr
+  end
 end
 
 puts 'my_each method:'
@@ -114,3 +122,7 @@ puts([8, 4, 3, 9, 5].my_count { |x| (x % 5).zero? })
 puts [3, 4, 3, 9, 5].my_count(3)
 puts [8, 4, 3, 9, 5].my_count
 puts
+
+puts 'my_map method:'
+puts([1, 2, 3, 4, 5].my_map { |x| x * 2 })
+puts [1, 2, 3, 4, 5].my_map
