@@ -34,7 +34,7 @@ module Enumerable
         if block_given?
           condition = false unless yield x
         else
-          condition = my_all? { |x| !x.nil? && (x != false)}
+          condition = my_all? { |y| !y.nil? && (y != false) }
         end
       else
         condition = false unless pattern === x
@@ -50,10 +50,10 @@ module Enumerable
         if block_given?
           condition = true if yield x
         else
-          condition = my_any? { |x| !x.nil? && (x != false)}
+          condition = my_any? { |y| !y.nil? && (y != false) }
         end
-      else
-        condition = true if pattern === x
+      elsif pattern === x
+        condition = true
       end
     end
     condition
@@ -66,13 +66,25 @@ module Enumerable
         if block_given?
           condition = false if yield x
         else
-          condition = my_any? { |x| x == true}
+          condition = my_any? { |y| y == true }
         end
-      else
-        condition = false if pattern === x
+      elsif pattern === x
+        condition = false
       end
     end
     condition
+  end
+
+  def my_count(item = nil)
+    count = 0
+    my_each do |x|
+      if item.nil?
+        block_given? ? (count += 1 if yield x) : count += 1
+      elsif item == x
+        count += 1
+      end
+    end
+    count
   end
 end
 
@@ -100,7 +112,7 @@ puts([8, 4, 3, 9, 5].my_all? { |x| x >= 3 })
 puts([8, 4, 3, 9, 5].my_all? { |x| x >= 4 })
 puts [8, 4, 3, false, 9].my_all?
 puts [8, 4, 3, 9, true].my_all?(Numeric)
-puts ['casd', 'ljdilj'].my_all?(/d/)
+puts %w[cas ljilj].my_all?(/d/)
 puts
 
 puts 'my_any? method:'
@@ -108,10 +120,17 @@ puts([8, 4, 3, 9, 5].my_any? { |x| x >= 3 })
 puts([8, 4, 3, 9, 5].my_any? { |x| x >= 10 })
 puts [8, 4, 3, false, 9].my_any?
 puts [8, 4, 3, 9, true].my_any?(Numeric)
-puts ['cas', 'ljilj'].my_any?(/d/)
+puts %w[cas ljilj].my_any?(/d/)
 puts
 
 puts 'my_none? method:'
 puts([8, 4, 3, 9, 5].my_none? { |x| x >= 3 })
 puts([8, 4, 3, 9, 5].my_none? { |x| x >= 10 })
+puts
+
+puts 'my_count method:'
+puts([8, 4, 3, 9, 5].my_count { |x| (x % 3).zero? })
+puts([8, 4, 3, 9, 5].my_count { |x| (x % 5).zero? })
+puts [3, 4, 3, 9, 5].my_count(3)
+puts [8, 4, 3, 9, 5].my_count
 puts
