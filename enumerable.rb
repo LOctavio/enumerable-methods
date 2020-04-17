@@ -28,61 +28,41 @@ module Enumerable
   end
 
   def my_all?(pattern = nil)
-    condition = true
-    my_each do |x|
-      if pattern.nil?
-        if block_given?
-          condition = false unless yield x
-        else
-          condition = my_all? { |y| !y.nil? && (y != false) }
-        end
-      else
-        condition = false unless pattern === x
-      end
+    val = true
+    if pattern.nil?
+      block_given? ? my_each { |x| val = false unless yield x } : val = my_all? { |x| !x.nil? && (x != false) }
+    else
+      my_each { |x| val = false unless pattern === x }
     end
-    condition
+    val
   end
 
   def my_any?(pattern = nil)
-    condition = false
-    my_each do |x|
-      if pattern.nil?
-        if block_given?
-          condition = true if yield x
-        else
-          condition = my_any? { |y| !y.nil? && (y != false) }
-        end
-      elsif pattern === x
-        condition = true
-      end
+    val = false
+    if pattern.nil?
+      block_given? ? my_each { |x| val = true if yield x } : val = my_any? { |x| !x.nil? && (x != false) }
+    else
+      my_each { |x| val = true if pattern === x }
     end
-    condition
+    val
   end
 
   def my_none?(pattern = nil)
-    condition = true
-    my_each do |x|
-      if pattern.nil?
-        if block_given?
-          condition = false if yield x
-        else
-          condition = my_any? { |y| y == true }
-        end
-      elsif pattern === x
-        condition = false
-      end
+    val = true
+    if pattern.nil?
+      block_given? ? my_each { |x| val = false if yield x } : val = my_any? { |x| x == true }
+    else
+      my_each { |x| val = false if pattern === x }
     end
-    condition
+    val
   end
 
   def my_count(item = nil)
     count = 0
-    my_each do |x|
-      if item.nil?
-        block_given? ? (count += 1 if yield x) : count += 1
-      elsif item == x
-        count += 1
-      end
+    if item.nil?
+      block_given? ? my_each { |x| count += 1 if yield x } : count += 1
+    else
+      my_each { |x| count += 1 if item == x }
     end
     count
   end
