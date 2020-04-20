@@ -1,10 +1,10 @@
 module Enumerable
   def my_each
     return to_enum unless block_given?
-    
+
     i = 0
     while i < size
-      yield self.to_a[i]
+      yield to_a[i]
       i += 1
     end
   end
@@ -74,6 +74,25 @@ module Enumerable
     my_each { |x| arr << yield(x) }
     arr
   end
+
+  def my_inject(val1 = nil, val2 = nil)
+    first_element = true
+    case val1
+    when nil then val = to_a[0]
+    when Numeric, Symbol
+      val = val1
+      first_element = false
+    end
+    if block_given?
+      my_each { |x| first_element == true ? first_element = false : val = yield(val, x) }
+    else
+      val1, val2 = val2, val1 if val1.is_a? Symbol
+      val = my_inject(val1) do |total, x|
+        instance_eval "#{total} #{val2} #{x}", __FILE__, __LINE__
+      end
+    end
+    val
+  end
 end
 
 puts 'my_each method:'
@@ -126,3 +145,12 @@ puts
 puts 'my_map method:'
 puts([1, 2, 3, 4, 5].my_map { |x| x * 2 })
 puts [1, 2, 3, 4, 5].my_map
+puts
+
+puts 'my_inject method:'
+
+puts([1, 2, 3, 4, 5].my_inject { |sum, n| sum * n })
+puts((5..10).my_inject(3) { |sum, n| sum + n })
+puts((5..10).my_inject(3, :*))
+puts((5..10).my_inject(:*))
+puts
