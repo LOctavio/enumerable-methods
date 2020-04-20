@@ -161,3 +161,11 @@ end
 
 puts 'multiply_els method:'
 puts multiply_els([2, 4, 5])
+puts
+
+puts 'my_map method with proc or block:'
+new_proc = Proc.new { |x| x * 2 }
+puts([1, 2, 3, 4, 5].my_map(&new_proc))
+puts
+puts [1, 2, 3, 4, 5].my_map { |x| x * 3 }
+puts
