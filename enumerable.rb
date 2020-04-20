@@ -148,9 +148,16 @@ puts [1, 2, 3, 4, 5].my_map
 puts
 
 puts 'my_inject method:'
-
 puts([1, 2, 3, 4, 5].my_inject { |sum, n| sum * n })
 puts((5..10).my_inject(3) { |sum, n| sum + n })
 puts((5..10).my_inject(3, :*))
 puts((5..10).my_inject(:*))
 puts
+
+def multiply_els(arr)
+  val = arr.inject { |product, n| product * n }
+  val
+end
+
+puts 'multiply_els method:'
+puts multiply_els([2, 4, 5])
