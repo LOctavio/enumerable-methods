@@ -1,10 +1,10 @@
 module Enumerable
   def my_each
     return to_enum unless block_given?
-
+    
     i = 0
-    while i < length
-      yield self[i]
+    while i < size
+      yield self.to_a[i]
       i += 1
     end
   end
@@ -77,7 +77,7 @@ module Enumerable
 end
 
 puts 'my_each method:'
-[1, 2, 3, 4].my_each { |x| puts x }
+(1..4).my_each { |x| puts x }
 puts [1, 2, 3, 4].my_each
 puts
 
