@@ -50,7 +50,7 @@ module Enumerable
   def my_none?(pattern = nil)
     val = true
     if pattern.nil?
-      block_given? ? my_each { |x| val = false if yield x } : val = my_any? { |x| x == true }
+      block_given? ? my_each { |x| val = false if yield x } : my_any? { |x| return false if x == true }
     else
       my_each { |x| val = false if pattern === x }
     end
@@ -107,7 +107,7 @@ puts hash
 hash2 = {}
 %w[first second third fourth].my_each_with_index
 puts hash2
-array = [1,2,5,8,7,98,4]
+array = [1, 2, 5, 8, 7, 98, 4]
 p array.my_each_with_index.class
 puts
 
@@ -130,11 +130,17 @@ puts([8, 4, 3, 9, 5].my_any? { |x| x >= 10 })
 puts [8, 4, 3, false, 9].my_any?
 puts [8, 4, 3, 9, true].my_any?(Numeric)
 puts %w[cas ljilj].my_any?(/d/)
+puts [].my_any?
 puts
 
 puts 'my_none? method:'
 puts([8, 4, 3, 9, 5].my_none? { |x| x >= 3 })
 puts([8, 4, 3, 9, 5].my_none? { |x| x >= 10 })
+puts [8, 4, 3, 9, true].my_none?
+array = [nil, false, nil, false]
+puts array.my_none?
+puts array.none?
+p array.my_none?(nil) == array.none?(nil)
 puts
 
 puts 'my_count method:'
