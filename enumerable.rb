@@ -10,7 +10,7 @@ module Enumerable
   end
 
   def my_each_with_index
-    return self unless block_given?
+    return to_enum unless block_given?
 
     i = 0
     while i < length
@@ -107,6 +107,8 @@ puts hash
 hash2 = {}
 %w[first second third fourth].my_each_with_index
 puts hash2
+array = [1,2,5,8,7,98,4]
+p array.my_each_with_index.class
 puts
 
 puts 'my_select_method:'
