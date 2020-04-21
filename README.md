@@ -9,10 +9,6 @@ These methods do the same work than the originals but they were created with my 
 
 - Ruby
 
-## Live Demo
-
-[Live Demo Link](https://repl.it/@LOctavio/enumerable-methods)
-
 ## Authors
 
 👤 **Author1**
