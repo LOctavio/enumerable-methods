@@ -94,3 +94,7 @@ module Enumerable
     val
   end
 end
+
+def multiply_els(arr)
+  arr.inject { |product, n| product * n }
+end
