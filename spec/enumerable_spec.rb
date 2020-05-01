@@ -70,9 +70,15 @@ describe Enumerable do
     end
   end
   describe "#my_count" do
-    it "all the number are counted" do
+    it "all numbers that are equal to 3 are counted" do
       expect([20, 3, 6, 10].my_count { |x| x == 3 }).to eql(1)
     end
+    it "all numbers that are equal to 5 are counted" do
+      expect([20, 3, 6, 10].my_count(5)).to eql(0)
+    end
+    it "all element are in array are counted" do
+    expect([20, 3, 6, 10].my_count).to eql(4)
+    end 
   end
   describe "#my_map" do
     it "all the number are multiplied by 2" do
@@ -80,8 +86,17 @@ describe Enumerable do
     end
   end
   describe "#my_inject" do
-    it "the result of the numbers inside the array is 39" do
+    it "the result of the sum of numbers inside the array is 39" do
       expect([20, 3, 6, 10].my_inject { |x,y| x+y }).to eql(39)
+    end
+    it "the result of the sum of numbers inside the array is 39" do
+      expect([20, 3, 6, 10].my_inject(:+)).to eql(39)
+    end
+    it "the result of the multiplication by 3 of the numbers inside the array is 120" do
+      expect([1, 2, 4, 5].my_inject(3,:*)).to eql(120)
+    end 
+    it "the result of the addition of the numbers inside the array and the parameter 3 is 15" do
+      expect([1, 2, 4, 5].my_inject(3) {|x,y| x+y}).to eql(15)
     end
   end
 end
