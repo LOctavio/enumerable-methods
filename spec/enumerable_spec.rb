@@ -22,19 +22,37 @@ describe Enumerable do
     end
   end
   describe "#my_all?" do
-    it "all the values are bigger or equal than 3" do
+    it "all the values are greater or equal than 3" do
       expect([8, 4, 3, 9, 5].my_all? { |x| x >= 3 }).to eql(true)
     end
-    it "all the values are not bigger or equal than 4" do
+    it "all the values are not greater or equal than 4" do
       expect([8, 4, 3, 9, 5].my_all? { |x| x >= 4 }).to eql(false)
+    end
+    it "all the values are not equal than 5" do
+      expect([8, 4, 3, 9, 5].my_all?(5)).to eql(false)
+    end
+    it "all the values are equal than 1" do
+      expect([1, 1, 1, 1, 1].my_all?(1)).to eql(true)
+    end
+    it "all the values are numbers" do
+      expect([8, 4, 3, 9, 5].my_all?(Numeric)).to eql(true)
+    end
+    it "all the values are not Strings" do
+      expect([8, 4, 3, 9, 5].my_all?(String)).to eql(false)
     end
   end
   describe "#my_any?" do
-    it "all the values are bigger or equal than 3" do
+    it "at least one of the values is greater or equal than 3" do
       expect([8, 4, 3, 9, 5].my_any? { |x| x >= 3 }).to eql(true)
     end
-    it "all the values are not bigger or equal than 10" do
+    it "there isn't any value greater or equal than 10" do
       expect([8, 4, 3, 9, 5].my_any? { |x| x >= 10 }).to eql(false)
+    end
+    it "at least one of the values is equal than 8" do
+      expect([8, "d", "e", 9, 5].my_any?(8)).to eql(true)
+    end
+    it "there isn't any value equal than 1" do
+      expect([3, 4, 5, 6, 7].my_any?(1)).to eql(false)
     end
   end
   describe "#my_none?" do
@@ -43,6 +61,12 @@ describe Enumerable do
     end
     it "the numbers are not positive" do
       expect([20, 3, 6, 10].my_none? { |x| x > 0 }).to eql(false)
+    end
+    it "there is not a number 7 inside the array" do
+      expect([20, 3, 6, 10].my_none?(7)).to eql(true)
+    end
+    it "there is a number 6 inside the array" do
+      expect([20, 3, 6, 10].my_none?(6)).to eql(false)
     end
   end
   describe "#my_count" do
