@@ -3,10 +3,12 @@ module Enumerable
     return to_enum unless block_given?
 
     i = 0
+    arr = []
     while i < size
-      yield to_a[i]
+      yield (arr[i] = to_a[i])
       i += 1
     end
+    arr
   end
 
   def my_each_with_index
