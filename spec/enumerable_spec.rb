@@ -29,4 +29,12 @@ describe Enumerable do
       expect([8, 4, 3, 9, 5].my_all? { |x| x >= 4 }).to eql(false)
     end
   end
+  describe '#my_any?' do
+    it 'all the values are bigger or equal than 3' do
+      expect([8, 4, 3, 9, 5].my_any? { |x| x >= 3 }).to eql(true)
+    end
+    it 'all the values are not bigger or equal than 10' do
+      expect([8, 4, 3, 9, 5].my_any? { |x| x >= 10 }).to eql(false)
+    end
+  end
 end
