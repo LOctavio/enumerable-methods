@@ -49,6 +49,14 @@ describe Enumerable do
     it 'all the values are not Strings' do
       expect([8, 4, 3, 9, 5].my_all?(String)).to eql(false)
     end
+
+    it 'all the values have a letter \'a\' inside' do
+      expect(%w[car bar chair].my_all?(/a/)).to eql(true)
+    end
+
+    it 'all the values do not have a letter \'h\' inside' do
+      expect(%w[car bar chair].my_all?(/h/)).to eql(false)
+    end
   end
   describe '#my_any?' do
     it 'at least one of the values is greater or equal than 3' do
@@ -63,6 +71,14 @@ describe Enumerable do
     it "there isn't any value equal than 1" do
       expect([3, 4, 5, 6, 7].my_any?(1)).to eql(false)
     end
+
+    it 'at least one of the values has a letter \'h\' inside' do
+      expect(%w[car bar chair].my_any?(/h/)).to eql(true)
+    end
+
+    it 'at least one of the values do not have a letter \'y\' inside' do
+      expect(%w[car bar chair].my_any?(/y/)).to eql(false)
+    end
   end
   describe '#my_none?' do
     it 'the numbers are not negative' do
@@ -76,6 +92,14 @@ describe Enumerable do
     end
     it 'there is a number 6 inside the array' do
       expect([20, 3, 6, 10].my_none?(6)).to eql(false)
+    end
+
+    it 'none of the values has a letter \'y\' inside' do
+      expect(%w[car bar chair].my_none?(/y/)).to eql(true)
+    end
+
+    it 'at least one of the values have a letter \'h\' inside' do
+      expect(%w[car bar chair].my_none?(/h/)).to eql(false)
     end
   end
   describe '#my_count' do
