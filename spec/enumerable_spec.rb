@@ -7,7 +7,7 @@ describe Enumerable do
         expect([1, 2, 3, 4].my_each { |x| print x }).to eql([1, 2, 3, 4])
       end
     end
-    
+
     context 'a method has no block or no arguments' do
       it 'return an enumerator if there is no block' do
         expect([1, 2, 3, 4].my_each).to be_an(Enumerator)
@@ -23,7 +23,7 @@ describe Enumerable do
         expect(hash).to eql({ 1 => 0, 2 => 1, 3 => 2, 4 => 3 })
       end
     end
-    
+
     context 'a method has no block or no arguments' do
       it 'return an enumerator if there is no block' do
         expect([1, 2, 3, 4].my_each_with_index).to be_an(Enumerator)
