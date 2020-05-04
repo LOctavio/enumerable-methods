@@ -57,6 +57,12 @@ describe Enumerable do
     it 'all the values do not have a letter \'h\' inside' do
       expect(%w[car bar chair].my_all?(/h/)).to eql(false)
     end
+    it 'none of the items are nil or false' do
+      expect([45,67,20,9].my_all?).to eql(true)
+    end
+    it 'one of the items is false or nil' do
+      expect([nil].my_all?).to  eql(false)
+    end
   end
   describe '#my_any?' do
     it 'at least one of the values is greater or equal than 3' do
@@ -79,6 +85,12 @@ describe Enumerable do
     it 'at least one of the values do not have a letter \'y\' inside' do
       expect(%w[car bar chair].my_any?(/y/)).to eql(false)
     end
+    it 'at least one of the items is not nil or false' do
+      expect([45,67,20,nil].my_any?).to eql(true)
+    end
+    it 'all the items are nil' do
+      expect([nil].my_any?).to  eql(false)
+    end
   end
   describe '#my_none?' do
     it 'the numbers are not negative' do
@@ -100,6 +112,12 @@ describe Enumerable do
 
     it 'at least one of the values have a letter \'h\' inside' do
       expect(%w[car bar chair].my_none?(/h/)).to eql(false)
+    end
+    it 'none of the items is true' do
+      expect([45,67,20,9].my_none?).to eql(true)
+    end
+    it 'one of the items is true' do
+      expect([true].my_none?).to  eql(false)
     end
   end
   describe '#my_count' do
