@@ -2,38 +2,50 @@ require './enumerable.rb'
 
 describe Enumerable do
   describe '#my_each' do
-    it 'return an array' do
-      expect([1, 2, 3, 4].my_each { |x| print x }).to eql([1, 2, 3, 4])
+    context 'when a method have block' do
+      it 'return an array' do
+        expect([1, 2, 3, 4].my_each { |x| print x }).to eql([1, 2, 3, 4])
+      end
     end
-
-    it 'return an enumerator if there is no block' do
-      expect([1, 2, 3, 4].my_each).to be_an(Enumerator)
+    
+    context 'a method has no block or no arguments' do
+      it 'return an enumerator if there is no block' do
+        expect([1, 2, 3, 4].my_each).to be_an(Enumerator)
+      end
     end
   end
 
   describe '#my_each_with_index' do
-    it 'all the values has an index' do
-      hash = {}
-      [1, 2, 3, 4].my_each_with_index { |val, index| hash[val] = index }
-      expect(hash).to eql({ 1 => 0, 2 => 1, 3 => 2, 4 => 3 })
+    context 'when a method have block' do
+      it 'all the values has an index' do
+        hash = {}
+        [1, 2, 3, 4].my_each_with_index { |val, index| hash[val] = index }
+        expect(hash).to eql({ 1 => 0, 2 => 1, 3 => 2, 4 => 3 })
+      end
     end
-
-    it 'return an enumerator if there is no block' do
-      expect([1, 2, 3, 4].my_each_with_index).to be_an(Enumerator)
+    
+    context 'a method has no block or no arguments' do
+      it 'return an enumerator if there is no block' do
+        expect([1, 2, 3, 4].my_each_with_index).to be_an(Enumerator)
+      end
     end
   end
 
   describe '#my_select' do
-    it 'selected values are multiple of three' do
-      expect([1, 2, 3, 4, 5, 6, 7, 8, 9].my_select { |x| (x % 3).zero? }).to eql([3, 6, 9])
+    context 'when a method have block' do
+      it 'selected values are multiple of three' do
+        expect([1, 2, 3, 4, 5, 6, 7, 8, 9].my_select { |x| (x % 3).zero? }).to eql([3, 6, 9])
+      end
+
+      it 'selected values are multiple of two' do
+        expect([1, 2, 3, 4, 5, 6, 7, 8, 9].my_select { |x| (x % 2).zero? }).to eql([2, 4, 6, 8])
+      end
     end
 
-    it 'selected values are multiple of two' do
-      expect([1, 2, 3, 4, 5, 6, 7, 8, 9].my_select { |x| (x % 2).zero? }).to eql([2, 4, 6, 8])
-    end
-
-    it 'return an enumerator if there is no block' do
-      expect([1, 2, 3, 4, 5, 6, 7, 8, 9].my_select).to be_an(Enumerator)
+    context 'a method has no block or no arguments' do
+      it 'return an enumerator if there is no block' do
+        expect([1, 2, 3, 4, 5, 6, 7, 8, 9].my_select).to be_an(Enumerator)
+      end
     end
   end
 
@@ -214,20 +226,28 @@ describe Enumerable do
   end
 
   describe '#my_inject' do
-    it 'the result of the sum of numbers inside the array is 39' do
-      expect([20, 3, 6, 10].my_inject { |x, y| x + y }).to eql(39)
+    context 'a method has a block' do
+      it 'the result of the sum of numbers inside the array is 39' do
+        expect([20, 3, 6, 10].my_inject { |x, y| x + y }).to eql(39)
+      end
     end
 
-    it 'the result of the sum of numbers inside the array is 39' do
-      expect([20, 3, 6, 10].my_inject(:+)).to eql(39)
+    context 'a method has a symbol as a parameter' do
+      it 'the result of the sum of numbers inside the array is 39' do
+        expect([20, 3, 6, 10].my_inject(:+)).to eql(39)
+      end
     end
 
-    it 'the result of the multiplication by 3 of the numbers inside the array is 120' do
-      expect([1, 2, 4, 5].my_inject(3, :*)).to eql(120)
+    context 'a method has a number and a symbol as a parameter' do
+      it 'the result of the multiplication by 3 of the numbers inside the array is 120' do
+        expect([1, 2, 4, 5].my_inject(3, :*)).to eql(120)
+      end
     end
 
-    it 'the result of the addition of the numbers inside the array and the parameter 3 is 15' do
-      expect([1, 2, 4, 5].my_inject(3) { |x, y| x + y }).to eql(15)
+    context 'a method has a number as a parameter and a block' do
+      it 'the result of the addition of the numbers inside the array and the parameter 3 is 15' do
+        expect([1, 2, 4, 5].my_inject(3) { |x, y| x + y }).to eql(15)
+      end
     end
   end
 end
