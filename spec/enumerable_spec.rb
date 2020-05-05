@@ -171,6 +171,13 @@ describe Enumerable do
       it 'at least one of the values have a letter \'h\' inside' do
         expect(%w[car bar chair].my_none?(/h/)).to eql(false)
       end
+      it 'none of the items is a string' do
+        expect([45, 67, 20, 9].my_none?(String)).to eql(true)
+      end
+
+      it 'one of the items is integer' do
+        expect([4].my_none?(Integer)).to eql(false)
+      end
     end
 
     context 'a method has no arguments or a block' do
@@ -180,14 +187,6 @@ describe Enumerable do
 
       it 'one of the items is true' do
         expect([true].my_none?).to eql(false)
-      end
-
-      it 'none of the items is true' do
-        expect([45, 67, 20, 9].my_none?.class).to eql(TrueClass)
-      end
-
-      it 'one of the items is true' do
-        expect([true].my_none?.class).to eql(FalseClass)
       end
     end
   end
