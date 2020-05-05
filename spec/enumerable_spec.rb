@@ -123,6 +123,14 @@ describe Enumerable do
       it 'at least one of the values do not have a letter \'y\' inside' do
         expect(%w[car bar chair].my_any?(/y/)).to eql(false)
       end
+
+      it 'at least one of the items is Integer' do
+        expect([45, 67, 20, 'jias'].my_any?(Integer)).to eql(true)
+      end
+
+      it 'any of the items is String' do
+        expect([nil].my_any?(String)).to eql(false)
+      end
     end
 
     context 'a method has no block or no arguments' do
@@ -132,14 +140,6 @@ describe Enumerable do
 
       it 'all the items are nil' do
         expect([nil].my_any?).to eql(false)
-      end
-
-      it 'at least one of the items is not nil or false' do
-        expect([45, 67, 20, nil].my_any?.class).to eql(TrueClass)
-      end
-
-      it 'all the items are nil' do
-        expect([nil].my_any?.class).to eql(FalseClass)
       end
     end
   end
