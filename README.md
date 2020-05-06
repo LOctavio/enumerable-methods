@@ -11,12 +11,17 @@ These methods do the same work than the originals but they were created with my 
 
 ## Authors
 
-👤 **Author1**
+👤 **Luis Octavio Ramirez Cruz**
 
 - Github: [@LOctavio](https://github.com/LOctavio)
 - Twitter: [@Octavio_ram431](https://twitter.com/Octavio_ram431)
 - Linkedin: [linkedin](https://www.linkedin.com/in/luis-octavio-ramirez-cruz)
 
+👤 **Ngenzi Mugunga Herve**
+
+- Github: [@muhenge](https://github.com/muhenge)
+- Twitter: [@NGENZIHerve](https://twitter.com/NGENZIHerve)
+- Linkedin: [linkedin](https://www.linkedin.com/in/mugunga-herve-a62a0ab9/ )
 
 ## 🤝 Contributing
 
